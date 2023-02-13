@@ -29,7 +29,7 @@ class applications(commands.Cog):
                            q14="What is your ign?")
     @app_commands.checks.cooldown(1, 8600)
     async def answer(self, interaction : discord.Interaction, q1:str, q2:str, q3:str, q4:str, q5:str, q6:str, q7:str, q8:str, q9:str, q10:str, q11:str, q12:str, q13:str, q14:str):
-        application_chan = self.bot.get_user(521028748829786134)
+        application_chan = await self.bot.fetch_user(759839292884910111)
         await interaction.response.send_message("Sent the application, An overview will be sent to your dms!", ephemeral=True)
 
         embed = discord.Embed(title="Your application", color = discord.Color.orange())
@@ -100,7 +100,7 @@ class applications(commands.Cog):
 
     @app_commands.command(name="accept")
     async def accept(self, interaction : discord.Interaction, memberid : str, reason : Optional[str]):
-        member = self.bot.get_user(int(memberid))
+        member = await self.bot.fetch_user(memberid)
         if reason is not None:
             await member.send(f"Hello {member.mention}! I am glad to inform you that you have been accepted into Zephyr! Congratulations. Reason for this being {reason}")
         else:
@@ -110,7 +110,7 @@ class applications(commands.Cog):
     @app_commands.command(name="deny")
     async def deny(self, interaction : discord.Interaction, memberid : str, reason : Optional[str]):
         db = await aiosqlite.connect("./applications/applications.db")
-        member = self.bot.get_user(int(memberid))
+        member = await self.bot.fetch_user(memberid)
         if reason is not None:    
             await member.send(f"Hey, Unfortunately your application got denied with the reason : **{reason}**\nYour stored application got removed. You are always welcome to re apply!")
         else:
